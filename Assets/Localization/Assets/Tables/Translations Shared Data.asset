@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Translations Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Translations
+  m_TableCollectionNameGuidString: a975885d92c49c34ba825ae6a03b5b86
+  m_Entries:
+  - m_Id: 153092259840
+    m_Key: start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1400461492224
+    m_Key: credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2391319674880
+    m_Key: quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3674629898240
+    m_Key: settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9528716460032
+    m_Key: intro1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11645648797696
+    m_Key: intro2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13007971319808
+    m_Key: intro3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13184543129600
+    m_Key: intro4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14115456319488
+    m_Key: skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14339134357504
+    m_Key: next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14605892091904
+    m_Key: previous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15506912477184
+    m_Key: volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15547861467136
+    m_Key: language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15585199161344
+    m_Key: restart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16864453492736
+    m_Key: continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16925094739968
+    m_Key: back to menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17012105576448
+    m_Key: back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17027519643648
+    m_Key: cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17127813840896
+    m_Key: english
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17149880074240
+    m_Key: spanish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17422719549440
+    m_Key: catalan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 217882361495552
+    m_Key: save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 629990400098304
+    m_Key: lose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 632931123101696
+    m_Key: retry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 637682652971008
+    m_Key: win
+    m_Metadata:
+      m_Items: []
+  - m_Id: 638102955786240
+    m_Key: winExplenation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 677962714349568
+    m_Key: pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 692801742110720
+    m_Key: "Programaci\xF3n, dise\xF1o de juego y arte por:"
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 8714439021081395224
+  references:
+    version: 2
+    RefIds:
+    - rid: 8714439021081395224
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1720203409864

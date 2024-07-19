@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Translations_ca-ES
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: ca-ES
+  m_SharedData: {fileID: 11400000, guid: a975885d92c49c34ba825ae6a03b5b86, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 153092259840
+    m_Localized: "COMEN\xC7AR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1400461492224
+    m_Localized: "CR\xC8DITS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2391319674880
+    m_Localized: SORTIR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3674629898240
+    m_Localized: "CONFIGURACI\xD3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9528716460032
+    m_Localized: "A Serenia, tots els \xE9ssers formen part d'una unitat, una intel\xB7lig\xE8ncia
+      col\xB7lectiva. L'harmonia i l'equilibri regnen. Els serenis viuen en pau,
+      connectats per una energia comuna que els permet pensar i actuar com un de
+      sol."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11645648797696
+    m_Localized: "Un errant d'universos ha estat viatjant a trav\xE9s de diferents
+      mons en total solitud, sempre buscant companyia i un lloc on pert\xE0nyer.
+      Fascinat per la bellesa i l'energia dels habitants de Serenia, nom\xE9s vol
+      fer amics i compartir les seves an\xE8cdotes amb altres."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13007971319808
+    m_Localized: "El que no sap \xE9s que la seva pres\xE8ncia, aliena a l'energia
+      de la resta d'\xE9ssers i vibrant de manera diferent, trenca l'equilibri d'aquesta
+      unitat. Amb cada amic que fa, provoca un desequilibri en la intel\xB7lig\xE8ncia
+      col\xB7lectiva, deslligant un caos que amena\xE7a amb convertir-se en bogeria
+      col\xB7lectiva.\n\n\n\n\n\n\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13184543129600
+    m_Localized: "Quant amics podr\xE0 fer abans que tot es descontroli completament?\n\n\n\n\n\n\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14115456319488
+    m_Localized: SALTAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14605892091904
+    m_Localized: ANTERIOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14339134357504
+    m_Localized: "SEG\xDCENT\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 217882361495552
+    m_Localized: GUARDAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15506912477184
+    m_Localized: VOLUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15547861467136
+    m_Localized: IDIOMA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15585199161344
+    m_Localized: REINICIAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16864453492736
+    m_Localized: CONTINUAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16925094739968
+    m_Localized: "TORNAR AL MEN\xDA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17012105576448
+    m_Localized: ENRERE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17027519643648
+    m_Localized: "CANCEL\xB7LAR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17127813840896
+    m_Localized: "ANGL\xC8S"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17149880074240
+    m_Localized: ESPANYOL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17422719549440
+    m_Localized: "CATAL\xC0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 629990400098304
+    m_Localized: HAS PERDUT!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 632931123101696
+    m_Localized: REINTENTAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 637682652971008
+    m_Localized: "HAS GUANYAT!\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 638102955786240
+    m_Localized: "Gr\xE0cies per jugar a Serenia: Balance Against Chaos. No dubtis
+      a provar el nostre altre joc, Fleje Beats"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 677962714349568
+    m_Localized: PAUSA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 692801742110720
+    m_Localized: "Programaci\xF3, disseny de joc i art per:"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
