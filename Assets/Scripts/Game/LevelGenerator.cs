@@ -190,7 +190,7 @@ public class LevelGenerator : MonoBehaviour {
         ActivateCurtains();
         for (int i = 3; i > 0; i--) {
             yield return new WaitForSeconds(1);
-            ShowCountdown(i);
+            //ShowCountdown(i);
         }
 
         MoveRandomPathObjects();
