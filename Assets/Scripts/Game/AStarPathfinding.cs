@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AStarPathfinding : MonoBehaviour {
+    [SerializeField] GameObject _container;
     Vector2Int startNode, goalNode;
     int[,] mazeMap;
 
@@ -13,10 +14,7 @@ public class AStarPathfinding : MonoBehaviour {
         // After setting the maze, try to find the path
         if (mazeMap != null) {
             List<Vector2Int> path = FindPath();
-            if (path != null) {
-                // Broadcast message to all objects in the scene to move along the path
-                Debug.Log("Path found!");
-            } else Debug.Log("Path not found!");
+            if (path != null) _container.BroadcastMessage("StartPath", path);
         }
     }
 
@@ -48,8 +46,8 @@ public class AStarPathfinding : MonoBehaviour {
             try { currentPos = cameFrom[currentPos]; } catch (KeyNotFoundException) { return null; }
         }
 
-        path.Reverse();
-        path.RemoveAt(path.Count - 1);
+        // Add the end node to the path
+        path.Add(startNode);
         return path;
     }
 
