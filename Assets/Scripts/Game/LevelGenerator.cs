@@ -145,21 +145,21 @@ public class LevelGenerator : MonoBehaviour {
     void ShuffleList<T>(List<T> list) {
         for (int i = list.Count - 1; i > 0; i--) {
             int j = Random.Range(0, i + 1);
-            T temp = list[i];
-            list[i] = list[j];
-            list[j] = temp;
+            (list[j], list[i]) = (list[i], list[j]);
         }
     }
 
     IEnumerator ShufflePath() {
-        //for (int i = 3; i > 0; i--) {
-        //    yield return new WaitForSeconds(1);
-        //    // ShowCountdown(i);
-        //}
-
+        for (int i = 3; i > 0; i--) {
+            yield return new WaitForSeconds(1);
+            ShowCountdown(i);
+        }
+        Debug.Log("Start shuffling path objects");
         MoveRandomPathObjects();
 
         // Start hide animation
         yield return null;
     }
+
+    void ShowCountdown(int number) => Debug.Log(number);
 }
