@@ -21,13 +21,13 @@ public class GameManager : MonoBehaviour {
 
     public void GameOver() {
         StopAllCoroutines();
-        AudioManager.Instance.StopSFX();
-        AudioManager.Instance.PlayMusic("gameOverTheme");
+        //AudioManager.Instance.StopSFX();
+        //AudioManager.Instance.PlayMusic("gameOverTheme");
     }
 
     public void GameWon() {
         StopAllCoroutines();
-        AudioManager.Instance.PlayMusic("gameWonTheme");
+        //AudioManager.Instance.PlayMusic("gameWonTheme");
     }
 
     IEnumerator DestroyWorld() {
@@ -74,16 +74,20 @@ public class GameManager : MonoBehaviour {
     public void StopTimer() => StopCoroutine(_timerCoroutine);
 
     IEnumerator UpdateTimer() {
+        _timerText.text = FormatTime(remainingTime);
         while (remainingTime > 0) {
             yield return new WaitForSeconds(1);
-            remainingTime--;
-            string minutes = (Mathf.Floor(Mathf.Round(remainingTime) / 60)).ToString();
-            string seconds = (Mathf.Round(remainingTime) % 60).ToString();
-
-            if (minutes.Length == 1) minutes = "0" + minutes;
-            if (seconds.Length == 1) seconds = "0" + seconds;
-            _timerText.text = minutes + ":" + seconds;
+            _timerText.text = FormatTime(--remainingTime);
         }
         GameOver();
+    }
+
+    string FormatTime(float time) {
+        string minutes = (Mathf.Floor(Mathf.Round(time) / 60)).ToString();
+        string seconds = (Mathf.Round(time) % 60).ToString();
+
+        if (minutes.Length == 1) minutes = "0" + minutes;
+        if (seconds.Length == 1) seconds = "0" + seconds;
+        return minutes + ":" + seconds;
     }
 }
