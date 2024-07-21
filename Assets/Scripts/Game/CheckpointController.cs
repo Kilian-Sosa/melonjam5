@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CheckpointController : MonoBehaviour {
     int animalsCount, maxAnimalsCount;
@@ -15,8 +14,7 @@ public class CheckpointController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         //AudioManager.Instance.PlaySFX("portal");
-
-        if (maxAnimalsCount == 0) maxAnimalsCount = other.gameObject.transform.parent.childCount;
+        if (maxAnimalsCount == 0) maxAnimalsCount = other.gameObject.transform.parent.parent.childCount;
         animalsCount++;
 
         if (animalsCount == maxAnimalsCount) StartCoroutine(NextLevel());

@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - DeathZone
   - Path
+  - Animal
   layers:
   - Default
   - TransparentFX

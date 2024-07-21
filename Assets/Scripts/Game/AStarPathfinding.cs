@@ -27,7 +27,7 @@ public class AStarPathfinding : MonoBehaviour {
                 _container.transform.GetChild(i).gameObject.BroadcastMessage("StartPath", path);
                 yield return new WaitForSeconds(Random.Range(0.4f, 0.6f));
             }
-            LevelGenerator.mazeObj[goalNode.x, goalNode.y].GetComponent<CheckpointController>().enabled = true;
+            LevelGenerator.mazeObj[goalNode.x, goalNode.y].AddComponent<CheckpointController>();
         }
         yield return null;
     }
