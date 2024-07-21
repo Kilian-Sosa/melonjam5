@@ -13,7 +13,7 @@ public class LevelGenerator : MonoBehaviour {
     [Header("Materials")]
     [SerializeField] Material pathMovedMaterial, goalMaterial;
     Vector2Int start = new(0, 0), end = new(0, 0);
-
+    static Material pathMaterial;
 
     void Start() {
         _aStarPathfinding = GetComponent<AStarPathfinding>();
@@ -119,6 +119,7 @@ public class LevelGenerator : MonoBehaviour {
                 else {
                     GameObject pathObj = Instantiate(_pathPrefab, position, Quaternion.identity);
                     pathObj.GetComponent<PathCube>().SetCorrectPosition(position);
+                    if (pathMaterial == null) pathMaterial = pathObj.transform.GetChild(0).GetComponent<Renderer>().material;
 
                     // Set start and end colors
                     if ((i == start.x && j == start.y) || (i == end.x && j == end.y)) {
@@ -142,7 +143,7 @@ public class LevelGenerator : MonoBehaviour {
         return false;
     }
 
-    void MoveObj(GameObject obj) {
+    IEnumerator MoveObj(GameObject obj) {
         Vector3 oldPosition = obj.transform.position;
         Vector3 randomPosition;
         do {
@@ -159,10 +160,12 @@ public class LevelGenerator : MonoBehaviour {
 
         obj.transform.position = randomPosition;
         obj.transform.GetChild(0).GetComponent<Renderer>().material = pathMovedMaterial;
+        yield return new WaitForEndOfFrame();
     }
 
     void MoveRandomPathObjects() {
         List<GameObject> pathObjects = new();
+        _aStarPathfinding.SetMaze(mazeStatus, start, end); // Set maze for pathfinding
 
         foreach (GameObject obj in mazeObj) {
             if (obj != null && obj.CompareTag("Path")) {
@@ -178,8 +181,11 @@ public class LevelGenerator : MonoBehaviour {
         ShuffleList(pathObjects);
         List<GameObject> objectsToMove = pathObjects.GetRange(0, numberToMove);
 
-        foreach (GameObject obj in objectsToMove) MoveObj(obj);
-        _aStarPathfinding.SetMaze(mazeStatus, start, end); // Set maze for pathfinding
+        StartCoroutine(MoveObjectsSequentially(objectsToMove));
+    }
+
+    IEnumerator MoveObjectsSequentially(List<GameObject> objects) {
+        foreach (GameObject obj in objects) yield return MoveObj(obj);
     }
 
     void ShuffleList<T>(List<T> list) {
@@ -212,5 +218,20 @@ public class LevelGenerator : MonoBehaviour {
             for (int j = 0; j < height; j++)
                 newMaze[i, j] = originalMaze[i, j];
         return newMaze;
+    }
+
+    public static void UpdateMazeStatus(Vector3 oldPosition, Vector3 newPosition, GameObject obj) {
+        mazeStatus[(int)oldPosition.x, (int)oldPosition.z] = 1;
+        mazeStatus[(int)newPosition.x, (int)newPosition.z] = 0;
+        obj.GetComponent<Renderer>().material = pathMaterial;
+
+        if (AreMazesEqual()) _aStarPathfinding.SendFollow();
+    }
+
+    static bool AreMazesEqual() {
+        for (int i = 0; i < maze.GetLength(0); i++)
+            for (int j = 0; j < maze.GetLength(1); j++)
+                if (maze[i, j] != mazeStatus[i, j]) return false;
+        return true;
     }
 }

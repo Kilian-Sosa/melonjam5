@@ -5,6 +5,7 @@ public class AStarPathfinding : MonoBehaviour {
     [SerializeField] GameObject _container;
     Vector2Int startNode, goalNode;
     int[,] mazeMap;
+    List<Vector2Int> path;
 
     public void SetMaze(int[,] maze, Vector2Int start = default, Vector2Int end = default) {
         mazeMap = maze;
@@ -12,11 +13,10 @@ public class AStarPathfinding : MonoBehaviour {
         if (start != default) goalNode = end;
 
         // After setting the maze, try to find the path
-        if (mazeMap != null) {
-            List<Vector2Int> path = FindPath();
-            if (path != null) _container.BroadcastMessage("StartPath", path);
-        }
+        if (mazeMap != null) path = FindPath();
     }
+
+    public void SendFollow() { if (path != null) _container.BroadcastMessage("StartPath", path); }
 
     List<Vector2Int> FindPath() {
         Queue<Vector2Int> queue = new();
