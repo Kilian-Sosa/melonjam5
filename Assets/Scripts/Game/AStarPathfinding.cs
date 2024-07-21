@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +17,21 @@ public class AStarPathfinding : MonoBehaviour {
         if (mazeMap != null) path = FindPath();
     }
 
-    public void SendFollow() { if (path != null) _container.BroadcastMessage("StartPath", path); }
+    public void SendFolow(Material goalMaterial) => StartCoroutine(SendFollowCoroutine(goalMaterial));
+ 
+    IEnumerator SendFollowCoroutine(Material goalMaterial) {
+        if (path != null) {
+            ShowPath(goalMaterial);
+            yield return new WaitForSeconds(0.5f);
+            _container.BroadcastMessage("StartPath", path);
+        }
+        yield return null;
+    }
+
+    void ShowPath(Material goalMaterial) {
+        foreach (var position in path)
+            LevelGenerator.mazeObj[position.x, position.y].transform.GetChild(0).GetComponent<Renderer>().material = goalMaterial;
+    }
 
     List<Vector2Int> FindPath() {
         Queue<Vector2Int> queue = new();

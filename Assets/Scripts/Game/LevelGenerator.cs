@@ -13,9 +13,10 @@ public class LevelGenerator : MonoBehaviour {
     [Header("Materials")]
     [SerializeField] Material pathMovedMaterial, goalMaterial;
     Vector2Int start = new(0, 0), end = new(0, 0);
-    static Material pathMaterial;
+    static Material pathMaterial, staticGoalMaterial;
 
     void Start() {
+        staticGoalMaterial = goalMaterial;
         _aStarPathfinding = GetComponent<AStarPathfinding>();
         LoadLevel("level7");
     }
@@ -220,12 +221,12 @@ public class LevelGenerator : MonoBehaviour {
         return newMaze;
     }
 
-    public static Material UpdateMazeStatus(Vector3 oldPosition, Vector3 newPosition) {
+    public static void UpdateMazeStatus(Vector3 oldPosition, Vector3 newPosition) {
         mazeStatus[(int)oldPosition.x, (int)oldPosition.z] = 1;
         mazeStatus[(int)newPosition.x, (int)newPosition.z] = 0;
+        mazeObj[(int)newPosition.x, (int)newPosition.z].transform.GetChild(0).GetComponent<Renderer>().material = pathMaterial;
 
-        if (AreMazesEqual()) _aStarPathfinding.SendFollow();
-        return pathMaterial;
+        if (AreMazesEqual()) _aStarPathfinding.SendFolow(staticGoalMaterial);
     }
 
     static bool AreMazesEqual() {
