@@ -5,10 +5,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
-    public int totalBalls = 0;
-    public float status = 0;
-    public bool isActive = false;
-    [SerializeField] float remainingTime;
+    [SerializeField] float remainingTime = 100f;
     Coroutine _timerCoroutine;
     TextMeshProUGUI _timerText;
     TMP_Text _countdownText;
@@ -18,7 +15,8 @@ public class GameManager : MonoBehaviour {
             Instance = this;
             DontDestroyOnLoad(gameObject);
         } else Destroy(gameObject);
-        AudioManager.Instance.PlayMusic("mainTheme");
+        //AudioManager.Instance.PlayMusic("mainTheme");
+        PlayerPrefs.SetInt("levelAmount", 7);
     }
 
     public void GameOver() {
@@ -67,7 +65,7 @@ public class GameManager : MonoBehaviour {
 
         colorAdjustments.saturation.value = endSaturation;
     }
-
+    
     public void StartTimer() {
         _timerText = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
         _timerCoroutine = StartCoroutine(UpdateTimer());

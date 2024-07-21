@@ -205,6 +205,7 @@ public class LevelGenerator : MonoBehaviour {
         }
 
         MoveRandomPathObjects();
+        GameManager.Instance.StartTimer();
     }
 
     void ShowCountdown(int number) => Debug.Log(number);
@@ -227,7 +228,10 @@ public class LevelGenerator : MonoBehaviour {
         mazeStatus[(int)newPosition.x, (int)newPosition.z] = 0;
         mazeObj[(int)newPosition.x, (int)newPosition.z].transform.GetChild(0).GetComponent<Renderer>().material = pathMaterial;
 
-        if (AreMazesEqual()) _aStarPathfinding.SendFolow(staticGoalMaterial);
+        if (AreMazesEqual()) {
+            _aStarPathfinding.SendFolow(staticGoalMaterial);
+            GameManager.Instance.StopTimer();
+        }
     }
 
     static bool AreMazesEqual() {
