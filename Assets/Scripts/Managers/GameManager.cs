@@ -1,20 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
     public int totalBalls = 0;
     public float status = 0;
-    public GameObject HPBar;
     public bool isActive = false;
-    int _playerCount = 0;
-    int _enemyCount = 0;
-    Coroutine _destroyWorldCoroutine;
+    [SerializeField] float remainingTime;
+    Coroutine _timerCoroutine;
+    TextMeshProUGUI _timerText;
     TMP_Text _countdownText;
 
     void Awake() {
@@ -25,57 +21,15 @@ public class GameManager : MonoBehaviour {
         AudioManager.Instance.PlayMusic("mainTheme");
     }
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (isActive) PauseGame();
-            else ResumeGame();
-        }
-        if (Input.GetKeyDown(KeyCode.F1)) SceneManager.LoadScene("Level1");
-        if (Input.GetKeyDown(KeyCode.F2)) SceneManager.LoadScene("Level2");
-        if (Input.GetKeyDown(KeyCode.F3)) SceneManager.LoadScene("Level3");
-    }
-
-    public void PauseGame() {
-        GameObject hud = GameObject.Find("HUD");
-        if (hud == null) return;
-        GameObject pausePanel = hud.transform.Find("PausePanel").gameObject;
-        pausePanel.SetActive(true);
-        StopAllCoroutines();
-        AudioManager.Instance.StopSFX();
-        isActive = false;
-    }
-
-    public void ResumeGame() {
-        GameObject hud = GameObject.Find("HUD");
-        if (hud == null) return;
-        GameObject pausePanel = hud.transform.Find("PausePanel").gameObject;
-        isActive = true;
-        HPBar = GameObject.Find("HPBar");
-        if (HPBar == null) return;
-        if (!pausePanel.activeSelf) HPBar.GetComponent<Image>().fillAmount = 0;
-        pausePanel.SetActive(false);
-        UpdateCounts();
-    }
-
-    public void UpdateCounts() {
-        _playerCount = GameObject.FindGameObjectsWithTag("Player").Length - 1;
-        _enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        totalBalls = _playerCount + _enemyCount;
-    }
-
     public void GameOver() {
         StopAllCoroutines();
         AudioManager.Instance.StopSFX();
         AudioManager.Instance.PlayMusic("gameOverTheme");
-        TakePicture("GameOverPanel");
-        isActive = false;
     }
 
     public void GameWon() {
         StopAllCoroutines();
         AudioManager.Instance.PlayMusic("gameWonTheme");
-        TakePicture("GameWonPanel");
-        isActive = false;
     }
 
     IEnumerator DestroyWorld() {
@@ -114,42 +68,24 @@ public class GameManager : MonoBehaviour {
         colorAdjustments.saturation.value = endSaturation;
     }
 
-    IEnumerator UpdateStatusBar(float oldStatus) {
-        if (oldStatus > status) {
-            for (float i = oldStatus; i >= status; i--) {
-                HPBar.GetComponent<Image>().fillAmount = i / 100;
-                yield return new WaitForSeconds(0.1f);
-            }
-        } else
-            for (float i = oldStatus; i <= status; i++) {
-                HPBar.GetComponent<Image>().fillAmount = i / 100;
-                yield return new WaitForSeconds(0.1f);
-            }
+    public void StartTimer() {
+        _timerText = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
+        _timerCoroutine = StartCoroutine(UpdateTimer());
     }
 
-    public void NextLevel() {
-        AudioManager.Instance.PlayMusic("mainTheme");
-        AudioManager.Instance.StopSFX();
-        StopAllCoroutines();
-        ResumeGame();
-        status = 0;
-        _destroyWorldCoroutine = null;
-        _countdownText = null;
-    }
+    public void StopTimer() => StopCoroutine(_timerCoroutine);
 
-    void TakePicture(string panelName) {
-        GameObject hud = GameObject.Find("HUD");
-        if (hud == null) return;
-        GameObject panel = hud.transform.Find(panelName).gameObject;
-        if (panel == null) return;
+    IEnumerator UpdateTimer() {
+        while (remainingTime > 0) {
+            yield return new WaitForSeconds(1);
+            remainingTime--;
+            string minutes = (Mathf.Floor(Mathf.Round(remainingTime) / 60)).ToString();
+            string seconds = (Mathf.Round(remainingTime) % 60).ToString();
 
-        StartCoroutine(ShowPanel(panel));
-        if (_destroyWorldCoroutine != null) StopCoroutine(_destroyWorldCoroutine);
-        if (_countdownText != null) _countdownText.text = "";
-    }
-
-    IEnumerator ShowPanel(GameObject panel) {
-        yield return new WaitForSecondsRealtime(0.2f);
-        panel.SetActive(true);
+            if (minutes.Length == 1) minutes = "0" + minutes;
+            if (seconds.Length == 1) seconds = "0" + seconds;
+            _timerText.text = minutes + ":" + seconds;
+        }
+        GameOver();
     }
 }
