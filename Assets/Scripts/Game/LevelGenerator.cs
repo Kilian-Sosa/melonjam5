@@ -18,12 +18,12 @@ public class LevelGenerator : MonoBehaviour {
     void Start() {
         staticGoalMaterial = goalMaterial;
         _aStarPathfinding = GetComponent<AStarPathfinding>();
-        LoadLevel("level7");
+        LoadLevel(PlayerPrefs.GetInt("level", 1));
     }
 
-    void LoadLevel(string filename) {
-        switch(filename) {
-            case "level1":
+    void LoadLevel(int levelNum) {
+        switch(levelNum) {
+            case 1:
                 maze = new int[,] {
                     {1, 0, 1, 1, 1},
                     {1, 0, 0, 0, 1},
@@ -34,7 +34,7 @@ public class LevelGenerator : MonoBehaviour {
                 start = new Vector2Int(0, 1);
                 end = new Vector2Int(4, 2);
                 break;
-            case "level2":
+            case 2:
                 maze = new int[,] {
                     {1, 0, 1, 1, 1},
                     {1, 0, 0, 0, 1},
@@ -45,7 +45,7 @@ public class LevelGenerator : MonoBehaviour {
                 start = new Vector2Int(0, 1);
                 end = new Vector2Int(3, 4);
                 break;
-            case "level3":
+            case 3:
                 maze = new int[,] {
                     {1, 0, 1, 1, 1},
                     {1, 0, 1, 0, 1},
@@ -56,7 +56,7 @@ public class LevelGenerator : MonoBehaviour {
                 start = new Vector2Int(0, 1);
                 end = new Vector2Int(3, 4);
                 break;
-            case "level4":
+            case 4:
                 maze = new int[,] {
                     {1, 0, 1, 1, 1, 1},
                     {1, 0, 0, 0, 0, 0},
@@ -68,7 +68,7 @@ public class LevelGenerator : MonoBehaviour {
                 start = new Vector2Int(0, 1);
                 end = new Vector2Int(1, 5);
                 break;
-            case "level5":
+            case 5:
                 maze = new int[,] {
                     {1, 0, 1, 1, 0, 1},
                     {1, 0, 0, 1, 0, 1},
@@ -80,7 +80,7 @@ public class LevelGenerator : MonoBehaviour {
                 start = new Vector2Int(0, 1);
                 end = new Vector2Int(0, 4);
                 break;
-            case "level6":
+            case 6:
                 maze = new int[,] {
                     {1, 0, 1, 1, 1, 1, 1},
                     {1, 0, 0, 0, 0, 0, 1},
@@ -93,7 +93,7 @@ public class LevelGenerator : MonoBehaviour {
                 start = new Vector2Int(0, 1);
                 end = new Vector2Int(3, 6);
                 break;
-            case "level7":
+            case 7:
                 maze = new int[,] {
                     {1, 0, 1, 1, 1, 1, 1},
                     {0, 0, 0, 1, 0, 0, 1},
@@ -103,8 +103,8 @@ public class LevelGenerator : MonoBehaviour {
                     {1, 0, 0, 1, 1, 0, 1},
                     {1, 0, 1, 1, 1, 1, 1}
                 };
-                start = new Vector2Int(6, 1);
-                end = new Vector2Int(0, 1);
+                start = new Vector2Int(0, 1);
+                end = new Vector2Int(6, 1);
                 break;
         }
         mazeStatus = DeepCopyMaze(maze);
@@ -139,8 +139,7 @@ public class LevelGenerator : MonoBehaviour {
 
     public static bool IsPositionOccupied(Vector3 position) {
         foreach (GameObject obj in mazeObj)
-            if (obj != null && obj.CompareTag("Path") && obj.transform.position == position 
-                && obj.GetComponent<PathCube>().GetCorrectPosition() == position) return true;
+            if (obj != null && obj.CompareTag("Path") && obj.transform.position == position) return true;
         return false;
     }
 

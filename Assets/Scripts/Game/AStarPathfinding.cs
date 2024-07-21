@@ -63,6 +63,7 @@ public class AStarPathfinding : MonoBehaviour {
 
         // Add the end node to the path
         path.Add(startNode);
+        path.Reverse();
         return path;
     }
 
