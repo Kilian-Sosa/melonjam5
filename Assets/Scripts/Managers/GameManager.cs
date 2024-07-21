@@ -1,15 +1,15 @@
 using System.Collections;
 using TMPro;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
     [SerializeField] float remainingTime = 100f;
+    CameraShake cameraShake;
     Coroutine _timerCoroutine;
     TextMeshProUGUI _timerText, _countdownText;
-    CameraShake cameraShake;
+    RawImage _screenshotImage;
 
     void Awake() {
         if (Instance == null) {
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
         _countdownText.text = "";
         _countdownText.gameObject.GetComponent<Animator>().enabled = false;
         StopAllCoroutines();
-        //AudioManager.Instance.StopSFX();
+        TakePicture("GameOverPanel");
         //AudioManager.Instance.PlayMusic("gameOverTheme");
     }
 
@@ -34,9 +34,40 @@ public class GameManager : MonoBehaviour {
         _countdownText.text = "";
         _countdownText.gameObject.GetComponent<Animator>().enabled = false;
         StopAllCoroutines();
+        TakePicture("GameWonPanel");
         //AudioManager.Instance.PlayMusic("gameWonTheme");
     }
-    
+
+    void TakePicture(string panelName) {
+        GameObject uiObj = GameObject.Find("UI");
+        if (uiObj == null) return;
+        Transform panel = uiObj.transform.Find(panelName);
+        if (panel == null) return;
+
+        _screenshotImage = panel.transform.Find("Screenshot").GetComponent<RawImage>();
+        CaptureScreenshot();
+        StartCoroutine(ShowPanel(panel.gameObject));
+    }
+
+    IEnumerator ShowPanel(GameObject panel) {
+        yield return new WaitForSecondsRealtime(0.2f);
+        panel.SetActive(true);
+    }
+
+    void CaptureScreenshot() {
+        StartCoroutine(LoadScreenshot());
+    }
+
+    IEnumerator LoadScreenshot() {
+        yield return new WaitForEndOfFrame();
+        Texture2D texture = new(Screen.width, Screen.height, TextureFormat.RGB24, false);
+
+        texture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+        texture.Apply();
+
+        _screenshotImage.texture = texture;
+    }
+
     public void StartTimer() {
         _timerText = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
         _timerCoroutine = StartCoroutine(UpdateTimer());
