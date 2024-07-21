@@ -49,10 +49,10 @@ public class MenuController : MonoBehaviour {
                 credits.SetActive(false);
                 menuPanel.SetActive(true);
                 menuPanel.GetComponent<Animator>().enabled = false;
-
                 break;
-            case "GoToRanking":
-                SCManager.Instance.LoadScene("RankingScene");
+            case "Restart":
+                GameManager.Instance.StopAllCoroutines();
+                SCManager.Instance.LoadScene("Game");
                 break;
             case "GoToMenu":
                 SCManager.Instance.LoadScene("Menu");
@@ -60,14 +60,12 @@ public class MenuController : MonoBehaviour {
             case "ExitGame":
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_STANDALONE_WIN
+#else
                 Application.Quit();
 #endif
                 break;
         }
     }
-
-    public void GoToIntro() => menuController.PerformAction("GoToIntro");
 
     public void StartGame(int level) {
         PlayerPrefs.SetInt("level", level);
@@ -92,7 +90,7 @@ public class MenuController : MonoBehaviour {
 
     public void LoadScene(string scene) => menuController.PerformAction("LoadScene", scene);
 
-    public void Resume() => menuController.PerformAction("Resume");
+    public void Restart() => menuController.PerformAction("Restart");
 
     public void ExitGame() => menuController.PerformAction("ExitGame");
 }
