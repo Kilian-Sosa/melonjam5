@@ -20,6 +20,7 @@ public class AStarPathfinding : MonoBehaviour {
     public void SendFolow(Material goalMaterial) => StartCoroutine(SendFollowCoroutine(goalMaterial));
  
     IEnumerator SendFollowCoroutine(Material goalMaterial) {
+        AudioManager.Instance.PlaySFX("path");
         if (path != null) {
             ShowPath(goalMaterial);
             yield return new WaitForSeconds(0.5f);

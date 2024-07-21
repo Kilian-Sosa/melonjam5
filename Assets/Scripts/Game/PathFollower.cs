@@ -24,6 +24,7 @@ public class PathFollower : MonoBehaviour {
             }
             _currentPathIndex++;
         }
+        AudioManager.Instance.PlaySFX("animalSaved");
         Destroy(gameObject);
     }
 }

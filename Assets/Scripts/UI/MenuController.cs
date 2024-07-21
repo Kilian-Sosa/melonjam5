@@ -27,7 +27,6 @@ public class MenuController : MonoBehaviour {
                 SCManager.Instance.LoadScene("Game");
                 break;
             case "ShowSettings":
-                // SCManager.instance.LoadScene("GeneralSettingsScene");
                 settings.SetActive(true);
                 menuPanel.SetActive(false);
                 break;

@@ -21,18 +21,16 @@ public class AudioManager : MonoBehaviour {
     void LoadSFXClips() {
         _sfxClips["countdown"] = Resources.Load<AudioClip>("SFX/countdownSFX");
         _sfxClips["buttonClicked"] = Resources.Load<AudioClip>("SFX/buttonClickedSFX");
-        _sfxClips["jump"] = Resources.Load<AudioClip>("SFX/jumpSFX");
-        _sfxClips["portal"] = Resources.Load<AudioClip>("SFX/portalSFX");
-        _sfxClips["fall"] = Resources.Load<AudioClip>("SFX/fallSFX");
-        _sfxClips["enemyConversion"] = Resources.Load<AudioClip>("SFX/enemyConversionSFX");
+        _sfxClips["path"] = Resources.Load<AudioClip>("SFX/pathSFX");
+        _sfxClips["pathMoved"] = Resources.Load<AudioClip>("SFX/pathMovedSFX");
+        _sfxClips["animalSaved"] = Resources.Load<AudioClip>("SFX/animalSavedSFX");
     }
 
     void LoadMusicClips() {
         _musicClips["mainTheme"] = Resources.Load<AudioClip>("Music/mainTheme");
         _musicClips["menuTheme"] = Resources.Load<AudioClip>("Music/menuTheme");
-        _musicClips["introTheme"] = Resources.Load<AudioClip>("Music/introTheme");
-        _musicClips["victoryTheme"] = Resources.Load<AudioClip>("Music/victoryTheme");
         _musicClips["gameOverTheme"] = Resources.Load<AudioClip>("Music/gameOverTheme");
+        _musicClips["victoryTheme"] = Resources.Load<AudioClip>("Music/victoryTheme");
     }
 
     public void PlaySFX(string clipName) {

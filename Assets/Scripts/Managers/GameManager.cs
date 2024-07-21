@@ -16,26 +16,25 @@ public class GameManager : MonoBehaviour {
             Instance = this;
             DontDestroyOnLoad(gameObject);
         } else Destroy(gameObject);
-        //AudioManager.Instance.PlayMusic("mainTheme");
-        PlayerPrefs.SetInt("levelsPassed", 1);
+        if (PlayerPrefs.HasKey("levelsPassed")) PlayerPrefs.SetInt("levelsPassed", 1);
     }
 
     public void GameOver() {
-        //AudioManager.Instance.StopSFX();
+        AudioManager.Instance.StopSFX();
         _countdownText.text = "";
         _countdownText.gameObject.GetComponent<Animator>().enabled = false;
         StopAllCoroutines();
         TakePicture("GameOverPanel");
-        //AudioManager.Instance.PlayMusic("gameOverTheme");
+        AudioManager.Instance.PlayMusic("gameOverTheme");
     }
 
     public void GameWon() {
-        //AudioManager.Instance.StopSFX();
+        AudioManager.Instance.StopSFX();
         _countdownText.text = "";
         _countdownText.gameObject.GetComponent<Animator>().enabled = false;
         StopAllCoroutines();
         TakePicture("GameWonPanel");
-        //AudioManager.Instance.PlayMusic("gameWonTheme");
+        AudioManager.Instance.PlayMusic("gameWonTheme");
     }
 
     void TakePicture(string panelName) {
@@ -73,7 +72,10 @@ public class GameManager : MonoBehaviour {
         _timerCoroutine = StartCoroutine(UpdateTimer());
     }
 
-    public void StopTimer() => StopCoroutine(_timerCoroutine);
+    public void StopTimer() {
+        AudioManager.Instance.StopSFX();
+        StopCoroutine(_timerCoroutine);
+    }
 
     IEnumerator UpdateTimer() {
         _timerText.text = FormatTime(remainingTime);
@@ -100,7 +102,7 @@ public class GameManager : MonoBehaviour {
             GameObject countdown = GameObject.Find("CountDown");
             _countdownText = countdown.GetComponent<TextMeshProUGUI>();
             countdown.GetComponent<Animator>().enabled = true;
-            //AudioManager.Instance.PlaySFX("countdown");
+            AudioManager.Instance.PlaySFX("countdown");
         }
         cameraShake.Shake(0.5f, 0.7f);
         _countdownText.text = remainingTime.ToString();
