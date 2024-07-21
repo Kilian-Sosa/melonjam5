@@ -15,7 +15,6 @@ public class PathFollower : MonoBehaviour {
     }
 
     IEnumerator FollowPath() {
-        yield return new WaitForSeconds(Random.Range(1, 2));
         while (_currentPathIndex < _path.Count) {
             Vector3 targetPosition = new(_path[_currentPathIndex].x, transform.position.y, _path[_currentPathIndex].y);
             while (transform.position != targetPosition) {
@@ -24,5 +23,6 @@ public class PathFollower : MonoBehaviour {
             }
             _currentPathIndex++;
         }
+        Destroy(gameObject);
     }
 }

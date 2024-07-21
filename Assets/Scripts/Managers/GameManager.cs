@@ -14,13 +14,8 @@ public class GameManager : MonoBehaviour {
     public bool isActive = false;
     int _playerCount = 0;
     int _enemyCount = 0;
-    Coroutine _saturationCoroutine;
     Coroutine _destroyWorldCoroutine;
-    Coroutine _updateStatusBar;
-    int _groupStatus = 0;
     TMP_Text _countdownText;
-
-    RawImage _screenshotImage;
 
     void Awake() {
         if (Instance == null) {
@@ -63,10 +58,9 @@ public class GameManager : MonoBehaviour {
     }
 
     public void UpdateCounts() {
-        _playerCount = GameObject.FindGameObjectsWithTag("Player").Length -1;
+        _playerCount = GameObject.FindGameObjectsWithTag("Player").Length - 1;
         _enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
         totalBalls = _playerCount + _enemyCount;
-        UpdateStatus();
     }
 
     public void GameOver() {
@@ -82,67 +76,6 @@ public class GameManager : MonoBehaviour {
         AudioManager.Instance.PlayMusic("gameWonTheme");
         TakePicture("GameWonPanel");
         isActive = false;
-    }
-
-    public void UpdateStatus() {
-        float oldStatus = status;
-        totalBalls = _playerCount + _enemyCount;
-        status = (float)_playerCount / totalBalls * 100;
-        if (_saturationCoroutine != null) StopCoroutine(_saturationCoroutine);
-        if (status != oldStatus) {
-            if (_updateStatusBar != null) StopCoroutine(_updateStatusBar);
-            _updateStatusBar = StartCoroutine(UpdateStatusBar(oldStatus));
-        }
-        if (status >= 75 && _destroyWorldCoroutine == null) {
-            _destroyWorldCoroutine = StartCoroutine(DestroyWorld());
-        } else if (status >= 60 && _groupStatus == 2) {
-            _saturationCoroutine = StartCoroutine(ChangeSaturationCoroutine(2f, -40f));
-            StartGroupCrazy();
-        } else if (status >= 40 && _groupStatus == 1) {
-            _saturationCoroutine = StartCoroutine(ChangeSaturationCoroutine(2f, -20f));
-            StartGroupAlert();
-        } else if (status >= 20 && _groupStatus == 0) {
-            _saturationCoroutine= StartCoroutine(ChangeSaturationCoroutine(2f, 0f));
-            StartGroupPatrol();
-        }
-    }
-
-    public void ChangePlayerCount() {
-        _playerCount = GameObject.FindGameObjectsWithTag("Player").Length - 1;
-        _enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        UpdateStatus();
-    }
-
-    void StartGroupPatrol() {
-        _groupStatus = 1;
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies) {
-            EnemyController enemyController = enemy.GetComponent<EnemyController>();
-            enemyController.StopAllCoroutines();
-            enemyController.StartGroupPatrol();
-        }
-    }
-
-    void StartGroupAlert() {
-        _groupStatus = 2;
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies) {
-            EnemyController enemyController = enemy.GetComponent<EnemyController>();
-            enemy.GetComponent<SyncController>().ChangeBalls(2);
-            enemyController.StopAllCoroutines();
-            enemyController.StartGroupAlert();
-        }
-    }
-
-    void StartGroupCrazy() {
-        _groupStatus = 3;
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies) {
-            enemy.GetComponent<SyncController>().ChangeBalls(3);
-            //EnemyController enemyController = enemy.GetComponent<EnemyController>();
-            //enemyController.StopAllCoroutines();
-            //enemyController.StartGroupCrazy();
-        }
     }
 
     IEnumerator DestroyWorld() {
@@ -200,10 +133,7 @@ public class GameManager : MonoBehaviour {
         StopAllCoroutines();
         ResumeGame();
         status = 0;
-        _groupStatus = 0;
-        _saturationCoroutine = null;
         _destroyWorldCoroutine = null;
-        _updateStatusBar = null;
         _countdownText = null;
     }
 
@@ -213,8 +143,6 @@ public class GameManager : MonoBehaviour {
         GameObject panel = hud.transform.Find(panelName).gameObject;
         if (panel == null) return;
 
-        _screenshotImage = panel.transform.Find("Screenshot").GetComponent<RawImage>();
-        CaptureScreenshot();
         StartCoroutine(ShowPanel(panel));
         if (_destroyWorldCoroutine != null) StopCoroutine(_destroyWorldCoroutine);
         if (_countdownText != null) _countdownText.text = "";
@@ -223,24 +151,5 @@ public class GameManager : MonoBehaviour {
     IEnumerator ShowPanel(GameObject panel) {
         yield return new WaitForSecondsRealtime(0.2f);
         panel.SetActive(true);
-    }
-
-    void CaptureScreenshot() {
-        StartCoroutine(LoadScreenshot());
-    }
-
-    IEnumerator LoadScreenshot() {
-        // Espera un frame para que la captura de pantalla se complete
-        yield return new WaitForEndOfFrame();
-
-        // Crea una nueva textura con las dimensiones de la pantalla
-        Texture2D texture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-
-        // Lee los datos de la pantalla en la textura
-        texture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-        texture.Apply();
-
-        // Aplica la textura a la imagen del canvas
-        _screenshotImage.texture = texture;
     }
 }

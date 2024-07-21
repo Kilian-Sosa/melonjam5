@@ -23,7 +23,11 @@ public class AStarPathfinding : MonoBehaviour {
         if (path != null) {
             ShowPath(goalMaterial);
             yield return new WaitForSeconds(0.5f);
-            _container.BroadcastMessage("StartPath", path);
+            for (int i = 0; i < _container.transform.childCount; i++) {
+                _container.transform.GetChild(i).gameObject.BroadcastMessage("StartPath", path);
+                yield return new WaitForSeconds(Random.Range(0.4f, 0.6f));
+            }
+            LevelGenerator.mazeObj[goalNode.x, goalNode.y].GetComponent<CheckpointController>().enabled = true;
         }
         yield return null;
     }

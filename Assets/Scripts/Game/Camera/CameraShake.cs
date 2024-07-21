@@ -15,10 +15,6 @@ public class CameraShake : MonoBehaviour {
     }
 
     IEnumerator ShakeCoroutine(float duration, float strengthMultiplier) {
-        // Wait until the camera stops transitioning
-        var cameraBehaviour = GetComponent<CameraBehaviour>();
-        if (cameraBehaviour._isTransitioning) yield break;
-
         _isShaking = true;
         Vector3 originalPos = transform.localPosition;
         float elapsed = 0f;

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class IntroController : MonoBehaviour {
     [SerializeField] GameObject[] texts;
-    CameraBehaviour _cameraController;
-    bool _direction = false;
     [SerializeField] GameObject playerSection2;
     [SerializeField] GameObject section3;
     [SerializeField] GameObject section4;
@@ -21,12 +19,9 @@ public class IntroController : MonoBehaviour {
         // AudioManager.Instance.PlayMusic("intro");
         texts[index].SetActive(true);
         prevButton.SetActive(false);
-
-        _cameraController = Camera.main.GetComponent<CameraBehaviour>();
     }
 
     public void ShowNext() {
-        _direction = true;
         texts[index].SetActive(false);
         if (index == 3) index = 0;
         texts[++index].SetActive(true);
@@ -37,7 +32,6 @@ public class IntroController : MonoBehaviour {
     }
 
     public void ShowPrev() {
-        _direction = false;
         texts[index].SetActive(false);
         if (index == 0) index = 3;
         texts[--index].SetActive(true);
@@ -58,8 +52,6 @@ public class IntroController : MonoBehaviour {
         prevButton.SetActive(index != 0);
         nextButton.SetActive(index != 3);
         //startButton.SetActive(index == 3);
-
-        _cameraController.Rotate(_direction);
     }
 
     public void TogglePlayerSection2Animator(int i) => playerSection2.SetActive(i == 1);

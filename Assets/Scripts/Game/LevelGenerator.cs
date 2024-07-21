@@ -125,6 +125,7 @@ public class LevelGenerator : MonoBehaviour {
                     // Set start and end colors
                     if ((i == start.x && j == start.y) || (i == end.x && j == end.y)) {
                         pathObj.transform.GetChild(0).GetComponent<Renderer>().material = goalMaterial;
+                        if (i == end.x && j == end.y) pathObj.transform.GetChild(0).gameObject.SetActive(true); // Show door
                     }
                     mazeObj[i, j] = pathObj;
                 }
