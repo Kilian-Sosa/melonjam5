@@ -19,9 +19,7 @@ public class LevelGenerator : MonoBehaviour {
         staticGoalMaterial = goalMaterial;
         _aStarPathfinding = GetComponent<AStarPathfinding>();
         PlayerPrefs.SetInt("level", 1);
-        int level = PlayerPrefs.GetInt("level", 1);
-        GameObject.Find("UI").transform.Find("LevelNumText").GetComponent<TMPro.TextMeshProUGUI>().text = $"{level}";
-        LoadLevel(level);
+        LoadLevel(PlayerPrefs.GetInt("level", 1));
     }
 
     void LoadLevel(int levelNum) {

@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: a975885d92c49c34ba825ae6a03b5b86, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 8714439376575660054
   m_TableData:
   - m_Id: 153092259840
     m_Localized: START
@@ -142,6 +143,15 @@ MonoBehaviour:
     m_Localized: 'Programming, game design, and art by:'
     m_Metadata:
       m_Items: []
+  - m_Id: 5761274306789376
+    m_Localized: Level {0}
+    m_Metadata:
+      m_Items:
+      - rid: 8714439376575660054
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 8714439376575660054
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00808234d9771400
