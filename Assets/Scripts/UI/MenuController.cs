@@ -15,13 +15,9 @@ public class MenuController : MonoBehaviour {
         if (!AudioManager.Instance.IsPlayingCountDown()) AudioManager.Instance.PlaySFX("buttonClicked");
 
         switch (action) {
-            case "GoToIntro":
-                AudioManager.Instance.PlayMusic("introTheme");
-                SCManager.Instance.LoadScene("Intro");
-                break;
             case "StartGame":
                 AudioManager.Instance.PlayMusic("mainTheme");
-                SCManager.Instance.LoadScene("Level1");
+                SCManager.Instance.LoadScene("Game");
                 break;
             case "ShowSettings":
                 // SCManager.instance.LoadScene("GeneralSettingsScene");
@@ -48,13 +44,6 @@ public class MenuController : MonoBehaviour {
                 break;
             case "GoToMenu":
                 SCManager.Instance.LoadScene("Menu");
-                break;
-            case "Resume":
-                GameManager.Instance.ResumeGame();
-                break;
-            case "LoadScene":
-                GameManager.Instance.ResumeGame();
-                SCManager.Instance.LoadScene(scene);
                 break;
             case "ExitGame":
 #if UNITY_EDITOR
