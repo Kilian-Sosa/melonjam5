@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour {
             DontDestroyOnLoad(gameObject);
         } else Destroy(gameObject);
         //AudioManager.Instance.PlayMusic("mainTheme");
-        PlayerPrefs.SetInt("levelAmount", 7);
+        PlayerPrefs.SetInt("levelsPassed", 1);
     }
 
     public void GameOver() {

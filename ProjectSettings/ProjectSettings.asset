@@ -12,9 +12,9 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: serenia
-  defaultCursor: {fileID: 2800000, guid: ce5d18158cf701540927ed60f3a2ed61, type: 3}
+  companyName: FlejeCute
+  productName: kiflowing
+  defaultCursor: {fileID: 2800000, guid: 74e9705aa5b9f0b49a1e87e3949b73e4, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -165,7 +165,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.DefaultCompany.serenia
+    Standalone: com.FlejeCute.kiflowing
   buildNumber:
     Standalone: 0
     VisionOS: 0

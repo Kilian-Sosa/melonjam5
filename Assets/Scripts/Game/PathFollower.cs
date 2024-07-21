@@ -19,6 +19,7 @@ public class PathFollower : MonoBehaviour {
             Vector3 targetPosition = new(_path[_currentPathIndex].x, transform.position.y, _path[_currentPathIndex].y);
             while (transform.position != targetPosition) {
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+                transform.LookAt(targetPosition);
                 yield return null;
             }
             _currentPathIndex++;

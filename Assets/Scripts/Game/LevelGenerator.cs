@@ -18,7 +18,7 @@ public class LevelGenerator : MonoBehaviour {
     void Start() {
         staticGoalMaterial = goalMaterial;
         _aStarPathfinding = GetComponent<AStarPathfinding>();
-        PlayerPrefs.SetInt("level", 1);
+        //PlayerPrefs.SetInt("level", 1);
         LoadLevel(PlayerPrefs.GetInt("level", 1));
     }
 

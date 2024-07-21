@@ -6,9 +6,16 @@ public class MenuController : MonoBehaviour {
     public GameObject credits;
     public GameObject settings;
     public GameObject menuPanel;
+    public GameObject levelsPanel;
 
     void Start() {
         if (credits != null) AudioManager.Instance.PlayMusic("menuTheme"); // Play in the menu
+
+        Transform buttonsContainer = levelsPanel.transform.GetChild(0);
+        for (int i = 0; i <= PlayerPrefs.GetInt("levelsPassed", 0); i++) {
+            GameObject levelButton = buttonsContainer.GetChild(i).gameObject;
+            if (levelButton != null) levelButton.GetComponent<Button>().interactable = true;
+        }
     }
 
     public void PerformAction(string action, string scene = "") {
@@ -23,6 +30,12 @@ public class MenuController : MonoBehaviour {
                 // SCManager.instance.LoadScene("GeneralSettingsScene");
                 settings.SetActive(true);
                 menuPanel.SetActive(false);
+                break;
+            case "ShowLevels":
+                levelsPanel.SetActive(true);
+                break;
+            case "HideLevels":
+                levelsPanel.SetActive(false);
                 break;
             case "HideSettings":
                 settings.SetActive(false);
@@ -57,9 +70,16 @@ public class MenuController : MonoBehaviour {
 
     public void GoToIntro() => menuController.PerformAction("GoToIntro");
 
-    public void StartGame() => menuController.PerformAction("StartGame");
+    public void StartGame(int level) {
+        PlayerPrefs.SetInt("level", level);
+        menuController.PerformAction("StartGame");
+    }
 
     public void ShowSettings() => menuController.PerformAction("ShowSettings");
+
+    public void ShowLevels() => menuController.PerformAction("ShowLevels");
+
+    public void HideLevels() => menuController.PerformAction("HideLevels");
 
     public void HideSettings() => menuController.PerformAction("HideSettings");
 
