@@ -24,6 +24,6 @@ public class CheckpointController : MonoBehaviour {
         PlayerPrefs.SetInt("level", PlayerPrefs.GetInt("level") + 1);
         PlayerPrefs.Save();
         yield return new WaitForSeconds(1);
-        SCManager.Instance.LoadScene("GameScene");
+        SCManager.Instance.LoadScene("Game");
     }
 }
