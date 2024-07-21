@@ -220,12 +220,12 @@ public class LevelGenerator : MonoBehaviour {
         return newMaze;
     }
 
-    public static void UpdateMazeStatus(Vector3 oldPosition, Vector3 newPosition, GameObject obj) {
+    public static Material UpdateMazeStatus(Vector3 oldPosition, Vector3 newPosition) {
         mazeStatus[(int)oldPosition.x, (int)oldPosition.z] = 1;
         mazeStatus[(int)newPosition.x, (int)newPosition.z] = 0;
-        obj.GetComponent<Renderer>().material = pathMaterial;
 
         if (AreMazesEqual()) _aStarPathfinding.SendFollow();
+        return pathMaterial;
     }
 
     static bool AreMazesEqual() {

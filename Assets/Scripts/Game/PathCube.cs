@@ -17,7 +17,7 @@ public class PathCube : MonoBehaviour {
                 transform.position = newPosition;
                 _isCorrect = true;
 
-                LevelGenerator.UpdateMazeStatus(oldPosition, newPosition, gameObject);
+                GetComponent<Renderer>().material = LevelGenerator.UpdateMazeStatus(oldPosition, newPosition);
             }
         }
     }
