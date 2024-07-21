@@ -1,19 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour {
     public static int[,] maze, mazeStatus;
     public static GameObject[,] mazeObj;
     public static AStarPathfinding _aStarPathfinding;
+
+    [Header("Prefabs")]
     [SerializeField] GameObject _pathPrefab, _wallPrefab;
+
+    [Header("Materials")]
+    [SerializeField] Material pathMovedMaterial, goalMaterial;
     Vector2Int start = new(0, 0), end = new(0, 0);
 
 
     void Start() {
         _aStarPathfinding = GetComponent<AStarPathfinding>();
-        LoadLevel("level1");
+        LoadLevel("level7");
     }
 
     void LoadLevel(string filename) {
@@ -31,52 +35,50 @@ public class LevelGenerator : MonoBehaviour {
                 break;
             case "level2":
                 maze = new int[,] {
-                    {1, 1, 1, 1, 1},
-                    {0, 0, 0, 0, 1},
+                    {1, 0, 1, 1, 1},
+                    {1, 0, 0, 0, 1},
                     {1, 1, 1, 0, 1},
                     {1, 0, 0, 0, 0},
                     {1, 1, 1, 1, 1}
                 };
-                start = new Vector2Int(1, 0);
+                start = new Vector2Int(0, 1);
                 end = new Vector2Int(3, 4);
                 break;
             case "level3":
                 maze = new int[,] {
-                    {1, 1, 1, 0, 1},
-                    {1, 1, 1, 0, 1},
-                    {1, 1, 1, 0, 1},
+                    {1, 0, 1, 1, 1},
+                    {1, 0, 1, 0, 1},
+                    {1, 0, 1, 0, 1},
                     {1, 0, 0, 0, 0},
                     {1, 0, 1, 1, 1}
                 };
-                start = new Vector2Int(0, 3);
+                start = new Vector2Int(0, 1);
                 end = new Vector2Int(3, 4);
                 break;
             case "level4":
                 maze = new int[,] {
-                    {1, 1, 1, 1, 1, 1},
+                    {1, 0, 1, 1, 1, 1},
                     {1, 0, 0, 0, 0, 0},
                     {1, 1, 1, 1, 0, 1},
                     {1, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 0, 1},
-                    {1, 1, 1, 1, 0, 1}
-                };
-                start = new Vector2Int(5, 4);
-                end = new Vector2Int(1, 5);
-                break;
-
-            case "level5":
-                maze = new int[,] {
-                    {1, 1, 1, 1, 0, 1},
-                    {0, 0, 0, 1, 0, 1},
-                    {0, 1, 0, 1, 0, 1},
-                    {1, 0, 0, 0, 0, 1},
-                    {1, 1, 1, 1, 1, 1},
                     {1, 1, 1, 1, 1, 1}
                 };
-                start = new Vector2Int(2, 0);
+                start = new Vector2Int(0, 1);
+                end = new Vector2Int(1, 5);
+                break;
+            case "level5":
+                maze = new int[,] {
+                    {1, 0, 1, 1, 0, 1},
+                    {1, 0, 0, 1, 0, 1},
+                    {0, 1, 0, 1, 0, 1},
+                    {0, 0, 0, 0, 0, 1},
+                    {1, 1, 0, 1, 1, 1},
+                    {1, 1, 1, 1, 1, 1}
+                };
+                start = new Vector2Int(0, 1);
                 end = new Vector2Int(0, 4);
                 break;
-
             case "level6":
                 maze = new int[,] {
                     {1, 0, 1, 1, 1, 1, 1},
@@ -90,10 +92,9 @@ public class LevelGenerator : MonoBehaviour {
                 start = new Vector2Int(0, 1);
                 end = new Vector2Int(3, 6);
                 break;
-
             case "level7":
                 maze = new int[,] {
-                    {1, 1, 1, 1, 1, 1, 1},
+                    {1, 0, 1, 1, 1, 1, 1},
                     {0, 0, 0, 1, 0, 0, 1},
                     {1, 1, 0, 1, 1, 0, 1},
                     {1, 0, 0, 0, 0, 0, 1},
@@ -101,8 +102,8 @@ public class LevelGenerator : MonoBehaviour {
                     {1, 0, 0, 1, 1, 0, 1},
                     {1, 0, 1, 1, 1, 1, 1}
                 };
-                start = new Vector2Int(1, 0);
-                end = new Vector2Int(6, 1);
+                start = new Vector2Int(6, 1);
+                end = new Vector2Int(0, 1);
                 break;
         }
         mazeStatus = DeepCopyMaze(maze);
@@ -120,8 +121,9 @@ public class LevelGenerator : MonoBehaviour {
                     pathObj.GetComponent<PathCube>().SetCorrectPosition(position);
 
                     // Set start and end colors
-                    if (i == start.x && j == start.y) pathObj.GetComponent<Renderer>().material.color = Color.green;
-                    if (i == end.x && j == end.y) pathObj.GetComponent<Renderer>().material.color = Color.red;
+                    if ((i == start.x && j == start.y) || (i == end.x && j == end.y)) {
+                        pathObj.transform.GetChild(0).GetComponent<Renderer>().material = goalMaterial;
+                    }
                     mazeObj[i, j] = pathObj;
                 }
             }
@@ -156,6 +158,7 @@ public class LevelGenerator : MonoBehaviour {
         mazeStatus[(int)randomPosition.x, (int)randomPosition.z] = 0;
 
         obj.transform.position = randomPosition;
+        obj.transform.GetChild(0).GetComponent<Renderer>().material = pathMovedMaterial;
     }
 
     void MoveRandomPathObjects() {
